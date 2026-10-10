@@ -553,7 +553,11 @@ function sky(){
   }
   if (reduce){ stars.forEach(s => { cx.fillStyle = '#fff'; cx.fillRect(s.x, s.y, s.r, s.r); }); boom(W * .7, H * .3); boom(W * .85, H * .2);
     parts.forEach(p => { for (let k = 0; k < 30; k++){ p.x += p.vx; p.y += p.vy; p.vy += .03; } cx.fillStyle = `hsl(${p.hue},100%,65%)`; cx.beginPath(); cx.arc(p.x, p.y, 1.8, 0, 7); cx.fill(); }); return; }
-  launch(); setTimeout(launch, 500); requestAnimationFrame(frame);
+  // два салюта уже раскрыты в момент открытия страницы — небо не пустое с первой секунды
+  boom(W * (W < 700 ? .7 : .72), H * .28); boom(W * (W < 700 ? .3 : .88), H * .18);
+  parts.forEach(p => { for (let k = 0; k < 22; k++){ p.x += p.vx; p.y += p.vy; p.vx *= .985; p.vy = p.vy * .985 + .035; p.life -= p.d; } });
+  parts.forEach(p => { cx.fillStyle = `hsla(${p.hue},100%,${55 + p.life * 25}%,${p.life})`; cx.beginPath(); cx.arc(p.x, p.y, 1.8, 0, 7); cx.fill(); });
+  setTimeout(launch, 900); requestAnimationFrame(frame);
 }
 
 renderCats(); rerender(); renderCart(); sky();

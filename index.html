@@ -1,31 +1,562 @@
 <!doctype html>
-<html lang="ru" data-stub>
+<html lang="ru">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Магазин салютов · демо готовится</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Небосвод — пиротехника оптом: батареи салютов, свечи, фонтаны</title>
+<meta name="description" content="Демо-концепт оптового магазина пиротехники: каталог салютов с фильтрами по калибру и залпам, заявка на опт, условия для дилеров.">
 <meta name="robots" content="noindex">
-<meta http-equiv="refresh" content="120">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Manrope:wght@400;600&display=swap">
+<meta property="og:title" content="Небосвод — пиротехника оптом">
+<meta property="og:description" content="Каталог салютов с фильтрами, заявка на опт, условия для дилеров.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@500;600;700;800&family=Carlito:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#F6F3EE;--ink:#1F1E1C;--muted:#6B655C;--acc:#8A6737}
-@media (prefers-color-scheme:dark){:root{--bg:#161615;--ink:#EDE7DC;--muted:#A9A195;--acc:#C9A66B}}
-*{box-sizing:border-box}html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Manrope,system-ui,sans-serif;display:grid;place-items:center;padding:24px}
-main{max-width:560px;text-align:center;display:flex;flex-direction:column;gap:18px;align-items:center}
-.k{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--acc);font-weight:600}
-h1{font:500 clamp(2rem,6vw,3rem)/1.1 "Cormorant Garamond",Georgia,serif;margin:0;text-wrap:balance}
-p{margin:0;color:var(--muted)}
-.bar{width:220px;height:3px;background:color-mix(in srgb,var(--acc) 20%,transparent);border-radius:3px;overflow:hidden}
-.bar i{display:block;height:100%;width:40%;background:var(--acc);animation:m 1.6s ease-in-out infinite}
-@keyframes m{0%{transform:translateX(-100%)}100%{transform:translateX(250%)}}
-@media (prefers-reduced-motion:reduce){.bar i{animation:none;width:60%}}
+:root{--bg:#070a1a;--bg2:#0d1230;--card:#121838;--line:rgba(255,255,255,.09);--tx:#eef0ff;--mut:#9aa1c7;--gold:#ffc23d;--pink:#ff3d8b;--cyan:#3de0ff;--green:#3ee39a;--r:18px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Manrope,system-ui,sans-serif;background:var(--bg);color:var(--tx);line-height:1.5;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:Unbounded,sans-serif;line-height:1.12;letter-spacing:-.01em}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;padding:15px 26px;border-radius:999px;transition:transform .15s,box-shadow .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px)}
+.btn--gold{background:linear-gradient(180deg,#ffd469,#ffad1f);color:#1a1200;box-shadow:0 10px 30px rgba(255,180,40,.3)}
+.btn--ghost{border:1.5px solid rgba(255,255,255,.28)}
+.btn--ghost:hover{border-color:var(--gold);color:var(--gold)}
+.kicker{display:inline-block;font:700 13px Manrope;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+
+.hdr{position:sticky;top:0;z-index:50;background:rgba(7,10,26,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hdr .wrap{display:flex;align-items:center;gap:24px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font:800 20px Unbounded}
+.logo i{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 50% 50%,#fff 0 8%,var(--gold) 9% 22%,transparent 23%),conic-gradient(from 0deg,var(--pink),var(--gold),var(--cyan),var(--pink));-webkit-mask:radial-gradient(circle,#000 62%,transparent 64%);mask:radial-gradient(circle,#000 62%,transparent 64%)}
+.nav{display:flex;gap:22px;margin-left:12px;font-weight:700;color:var(--mut)}
+.nav a:hover{color:var(--tx)}
+.hdr__r{margin-left:auto;display:flex;align-items:center;gap:14px}
+.hdr__ph{font-weight:800}
+.cartbtn{position:relative;display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.07);font-weight:800}
+.cartbtn b{min-width:22px;height:22px;border-radius:11px;background:var(--pink);color:#fff;font-size:12px;display:grid;place-items:center;padding:0 6px}
+
+.hero{position:relative;min-height:640px;display:flex;align-items:center;overflow:hidden;background:radial-gradient(900px 500px at 75% 10%,#1b2266,transparent 70%),linear-gradient(180deg,#070a1a,#0b1030)}
+#sky{position:absolute;inset:0;width:100%;height:100%}
+.hero .wrap{position:relative;z-index:2;width:100%;padding-top:60px;padding-bottom:80px}
+.hero h1{font-size:clamp(36px,6vw,76px);font-weight:800;max-width:780px;margin-top:18px}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--gold),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{font-size:20px;color:#c8cdf0;max-width:600px;margin-top:22px}
+.hero__cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.hero__stats{display:flex;flex-wrap:wrap;gap:34px;margin-top:54px}
+.hero__stats div b{display:block;font:800 30px Unbounded;color:#fff}
+.hero__stats div span{color:var(--mut);font-weight:600}
+
+section{padding:90px 0}
+.sh{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:34px;flex-wrap:wrap}
+.sh h2{font-size:clamp(28px,3.6vw,44px);margin-top:10px}
+.sh p{color:var(--mut);max-width:440px}
+
+.cats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.cat{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;min-height:150px;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .2s,transform .2s;text-align:left}
+.cat:hover{border-color:rgba(255,194,61,.5);transform:translateY(-3px)}
+.cat h3{font-size:17px;font-weight:700;position:relative;z-index:1}
+.cat span{color:var(--mut);font-weight:700;position:relative;z-index:1}
+.cat svg{position:absolute;right:-30px;top:-20px;width:150px;height:112px;opacity:.75}
+
+.cat-sec{background:linear-gradient(180deg,var(--bg),var(--bg2))}
+.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.chip{padding:9px 16px;border-radius:999px;border:1.5px solid var(--line);font-weight:700;color:var(--mut);transition:.15s}
+.chip:hover{color:var(--tx)}
+.chip.on{background:var(--gold);border-color:var(--gold);color:#1a1200}
+.fld{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;font-weight:600;min-width:0}
+.fld:focus{outline:none;border-color:var(--gold)}
+.search{flex:1;min-width:200px}
+.chk{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--mut);cursor:pointer}
+.chk input{accent-color:var(--pink);width:18px;height:18px}
+.count{color:var(--mut);font-weight:700;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.22)}
+.card__img{position:relative;aspect-ratio:4/3;background:radial-gradient(circle at 50% 120%,#1d2560,#090c22 70%);cursor:pointer}
+.card__img svg{width:100%;height:100%;display:block}
+.badge{position:absolute;top:12px;left:12px;font:800 11px Manrope;letter-spacing:.08em;padding:5px 9px;border-radius:8px;background:var(--pink);color:#fff}
+.badge--new{background:var(--green);color:#04210f}
+.art{position:absolute;top:12px;right:12px;font:700 12px Manrope;color:#c8cdf0;background:rgba(0,0,0,.45);padding:4px 8px;border-radius:8px}
+.card__b{padding:16px;display:flex;flex-direction:column;gap:12px;flex:1}
+.card__b h3{font:700 16px Manrope;cursor:pointer}
+.specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.specs div{background:rgba(255,255,255,.05);border-radius:10px;padding:7px 4px;text-align:center}
+.specs small{display:block;font-size:11px;color:var(--mut);font-weight:700}
+.specs b{font-size:14px}
+.card__f{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.price b{font:800 19px Unbounded}
+.price small{display:block;color:var(--mut);font-weight:600;font-size:12px}
+.add{width:44px;height:44px;border-radius:12px;background:var(--gold);color:#1a1200;font:800 22px Manrope;flex:none}
+.add.in{background:var(--green)}
+.more{display:flex;justify-content:center;margin-top:30px}
+.empty{padding:50px;text-align:center;color:var(--mut);border:1.5px dashed var(--line);border-radius:var(--r);grid-column:1/-1}
+
+.why{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.why div{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px}
+.why b{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:rgba(255,194,61,.14);color:var(--gold);font:800 18px Unbounded;margin-bottom:18px}
+.why h3{font-size:18px;font-weight:700;margin-bottom:10px}
+.why p{color:var(--mut)}
+
+.deal{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;background:radial-gradient(600px 300px at 0% 0%,rgba(255,61,139,.22),transparent 70%),radial-gradient(600px 300px at 100% 100%,rgba(61,224,255,.16),transparent 70%),var(--card);border:1px solid var(--line);border-radius:28px;padding:50px}
+.deal h2{font-size:clamp(26px,3.2vw,40px);margin:10px 0 16px}
+.deal ul{list-style:none;display:grid;gap:12px;margin-top:20px}
+.deal li{display:flex;gap:12px;font-weight:700}
+.deal li:before{content:"✦";color:var(--gold)}
+.form{display:grid;gap:12px;background:rgba(7,10,26,.6);border:1px solid var(--line);border-radius:20px;padding:26px}
+.form h3{font-size:20px}
+.form .fld{width:100%}
+.agree{font-size:13px;color:var(--mut)}
+.agree a{text-decoration:underline}
+.ok-msg{display:none;padding:14px;border-radius:12px;background:rgba(62,227,154,.12);color:var(--green);font-weight:700}
+
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:s}
+.steps div{border-top:2px solid var(--gold);padding-top:18px}
+.steps div:before{counter-increment:s;content:"0" counter(s);font:800 14px Unbounded;color:var(--gold)}
+.steps h3{font-size:17px;font-weight:700;margin:10px 0 8px}
+.steps p{color:var(--mut)}
+
+.legal{background:rgba(255,194,61,.07);border:1px solid rgba(255,194,61,.25);border-radius:var(--r);padding:20px 24px;color:#e8dcb8;font-size:15px;display:flex;gap:16px;align-items:flex-start}
+.legal b.age{flex:none;font:800 18px Unbounded;color:var(--gold);border:2px solid var(--gold);border-radius:12px;padding:6px 10px}
+.foot{border-top:1px solid var(--line);padding:34px 0 40px;margin-top:20px}
+.foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px 24px}
+.foot__name{font:800 17px Unbounded}
+.foot__made{color:var(--mut);font-style:italic}
+.foot__made a{font-family:Calibri,Carlito,sans-serif;font-weight:700;font-style:italic;font-size:1.12em;margin-left:.3em;color:var(--tx)}
+.foot__made a:hover{text-decoration:underline}
+.foot__made img{width:40px;height:52px;vertical-align:-7px;margin-left:6px}
+.foot__demo{flex-basis:100%;color:var(--mut);font-size:14px}
+
+.ov{position:fixed;inset:0;background:rgba(3,5,15,.7);backdrop-filter:blur(4px);z-index:90;opacity:0;pointer-events:none;transition:.2s}
+.ov.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:#0b1030;border-left:1px solid var(--line);z-index:100;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.dr__h{display:flex;justify-content:space-between;align-items:center;padding:22px;border-bottom:1px solid var(--line)}
+.dr__h h3{font-size:20px}
+.x{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.1);font-size:20px;flex:none}
+.dr__list{flex:1;overflow:auto;padding:12px 22px}
+.ln{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.ln svg{width:56px;height:56px;border-radius:12px;background:#090c22}
+.ln h4{font-size:14px}
+.ln small{color:var(--mut);font-weight:600}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.08);font-weight:800}
+.qty b{min-width:22px;text-align:center}
+.dr__f{padding:22px;border-top:1px solid var(--line);display:grid;gap:12px}
+.tot{display:flex;justify-content:space-between;font-weight:800;font-size:18px}
+.tot b{font-family:Unbounded}
+.note{font-size:13px;color:var(--mut)}
+.modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-46%);width:min(860px,calc(100% - 24px));max-height:calc(100% - 40px);overflow:auto;background:#0b1030;border:1px solid var(--line);border-radius:24px;z-index:100;opacity:0;pointer-events:none;transition:.2s}
+.modal.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+.pm{display:grid;grid-template-columns:1fr 1fr}
+.pm__img{background:radial-gradient(circle at 50% 120%,#1d2560,#090c22 70%);min-height:360px;position:relative}
+.pm__img svg{position:absolute;inset:0;width:100%;height:100%}
+.pm__b{padding:30px;display:grid;gap:16px;align-content:start}
+.pm__b h3{font-size:24px}
+.tbl{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;font-weight:600}
+.tbl span{color:var(--mut)}
+.pm .x{position:absolute;top:14px;right:14px;z-index:2}
+.imp{padding:28px;display:grid;gap:14px}
+.imp textarea{min-height:170px;font:600 13px/1.5 ui-monospace,Consolas,monospace;resize:vertical;width:100%}
+.admin{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:rgba(62,227,154,.07);border:1px dashed rgba(62,227,154,.4);border-radius:14px;padding:14px 18px;margin-bottom:22px;font-weight:700;color:#bff5dc}
+.admin .btn{padding:10px 18px;background:var(--green);color:#04210f}
+
+@media (max-width:1000px){
+  .cats,.grid,.why,.steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .deal{grid-template-columns:1fr;padding:30px}
+  .nav{display:none}
+}
+@media (max-width:620px){
+  .wrap{padding:0 16px}
+  .hdr__ph{display:none}
+  .hero{min-height:560px}
+  .hero p{font-size:17px}
+  .hero__cta .btn{flex:1 1 100%}
+  .hero__stats{gap:22px}
+  section{padding:64px 0}
+  .grid{gap:10px}
+  .card__b{padding:12px;gap:10px}
+  .specs b{font-size:13px}
+  .price b{font-size:16px}
+  .add{width:40px;height:40px}
+  .why,.steps{grid-template-columns:1fr}
+  .pm{grid-template-columns:1fr}
+  .pm__img{min-height:240px}
+  .deal{padding:22px;border-radius:22px}
+  .filters .fld{flex:1 1 45%}
+  .btn{white-space:normal;text-align:center}
+  .admin .btn{width:100%}
+}
+@media (max-width:440px){.grid{grid-template-columns:1fr}.cats{grid-template-columns:1fr 1fr}.cat{min-height:120px;padding:16px}.cat h3{font-size:14px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
-<body><main>
-<div class="k">Демо-версия по вашему ТЗ</div>
-<h1>Магазин салютов</h1>
-<div class="bar" aria-hidden="true"><i></i></div>
-<p>Сайт сейчас собирается по вашему техническому заданию.<br>Будет готов сегодня к <b>08:45</b> – по этой же ссылке.</p>
-<p style="font-size:.85rem">Страница обновится сама.</p>
-</main></body></html>
+<body>
+
+<header class="hdr"><div class="wrap">
+  <a class="logo" href="#top"><i></i>Небосвод</a>
+  <nav class="nav"><a href="#catalog">Каталог</a><a href="#dealers">Дилерам</a><a href="#delivery">Доставка</a><a href="#contacts">Контакты</a></nav>
+  <div class="hdr__r">
+    <a class="hdr__ph" href="tel:+79000000000">+7 (900) 000-00-00</a>
+    <button class="cartbtn" id="openCart">Заявка <b id="cartN">0</b></button>
+  </div>
+</div></header>
+
+<section class="hero" id="top">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <span class="kicker">Пиротехника оптом по России</span>
+    <h1>Салюты, от которых <em>замирает двор</em></h1>
+    <p>Батареи салютов, римские свечи, фонтаны и ракеты со склада. Одна оптовая цена для всех, отгрузка в день оплаты и доставка до терминала перевозчика.</p>
+    <div class="hero__cta">
+      <a class="btn btn--gold" href="#catalog">Смотреть каталог →</a>
+      <a class="btn btn--ghost" href="#dealers">Получить прайс-лист</a>
+    </div>
+    <div class="hero__stats">
+      <div><b id="statN">36</b><span>позиций в каталоге</span></div>
+      <div><b>1 день</b><span>сборка заказа</span></div>
+      <div><b>до 40%</b><span>скидки дилерам</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cats"><div class="wrap">
+  <div class="sh"><div><span class="kicker">Каталог</span><h2>Категории товаров</h2></div><p>Выберите категорию — каталог ниже сразу отфильтруется.</p></div>
+  <div class="cats" id="cats-grid"></div>
+</div></section>
+
+<section class="cat-sec" id="catalog"><div class="wrap">
+  <div class="sh"><div><span class="kicker">Все позиции</span><h2>Каталог салютов</h2></div><p>Фильтр по калибру и количеству залпов. Цена — за штуку при заказе от коробки.</p></div>
+  <div class="admin"><span>Демо: загрузите свои салюты из таблицы — карточки появятся в каталоге</span><button class="btn" id="openImp">Загрузить карточки (CSV)</button></div>
+  <div class="chips" id="chips"></div>
+  <div class="filters">
+    <input class="fld search" id="q" type="search" placeholder="Поиск по названию или артикулу">
+    <select class="fld" id="fCal"><option value="">Любой калибр</option><option value="s">до 0,8"</option><option value="m">1,0–1,1"</option><option value="l">1,2" и больше</option></select>
+    <select class="fld" id="fShots"><option value="">Любые залпы</option><option value="s">до 25</option><option value="m">26–100</option><option value="l">больше 100</option></select>
+    <select class="fld" id="fSort"><option value="pop">Сначала популярные</option><option value="pa">Дешевле</option><option value="pd">Дороже</option><option value="sh">Больше залпов</option></select>
+    <label class="chk"><input type="checkbox" id="fSale"> Распродажа</label>
+  </div>
+  <div class="count" id="count"></div>
+  <div class="grid" id="grid"></div>
+  <div class="more"><button class="btn btn--ghost" id="more">Показать ещё</button></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sh"><div><span class="kicker">Почему мы</span><h2>Работать с «Небосводом» выгодно</h2></div></div>
+  <div class="why">
+    <div><b>1</b><h3>Цена со склада</h3><p>Прямые поставки без посредников — одна оптовая цена для всех клиентов.</p></div>
+    <div><b>2</b><h3>Сертификаты</h3><p>На каждую позицию — сертификат соответствия и инструкция на русском языке.</p></div>
+    <div><b>3</b><h3>Отгрузка в срок</h3><p>Собираем заказ за день, везём своим транспортом по области и до терминалов ТК.</p></div>
+    <div><b>4</b><h3>Поддержка дилеров</h3><p>Скидки, отсрочка платежа, рекламные материалы и видео для витрины.</p></div>
+  </div>
+</div></section>
+
+<section id="dealers"><div class="wrap">
+  <div class="deal">
+    <div>
+      <span class="kicker">Партнёрам</span>
+      <h2>Станьте дилером «Небосвода» в своём регионе</h2>
+      <p style="color:#c8cdf0">Оставьте телефон — пришлём актуальный прайс-лист и расскажем об условиях.</p>
+      <ul><li>Скидки до 40% от объёма закупки</li><li>Отсрочка платежа для постоянных партнёров</li><li>Видео салютов для вашей витрины и соцсетей</li><li>Помощь с документами для торговли</li></ul>
+    </div>
+    <form class="form" id="leadForm" novalidate>
+      <h3>Получить прайс-лист</h3>
+      <input class="fld" name="name" placeholder="Ваше имя">
+      <input class="fld" name="phone" type="tel" placeholder="+7 (___) ___-__-__">
+      <input class="fld" name="city" placeholder="Город">
+      <label class="agree"><input type="checkbox" checked> Согласен на <a href="#" onclick="return false">обработку персональных данных</a></label>
+      <button class="btn btn--gold" type="submit">Отправить</button>
+      <div class="ok-msg" id="okLead">Спасибо! Это демо — заявка никуда не отправлена.</div>
+    </form>
+  </div>
+</div></section>
+
+<section id="delivery"><div class="wrap">
+  <div class="sh"><div><span class="kicker">Как заказать</span><h2>От заявки до отгрузки</h2></div></div>
+  <div class="steps">
+    <div><h3>Собираете заявку</h3><p>Добавляете позиции в каталоге — количество в коробках.</p></div>
+    <div><h3>Подтверждаем</h3><p>Менеджер проверяет наличие и присылает счёт.</p></div>
+    <div><h3>Собираем заказ</h3><p>Комплектуем за день, фото и видео упаковки по запросу.</p></div>
+    <div><h3>Доставляем</h3><p>Своим транспортом по области или до терминала перевозчика.</p></div>
+  </div>
+</div></section>
+
+<section id="contacts" style="padding-top:0"><div class="wrap">
+  <div class="legal"><b class="age">18+</b><div>Пиротехнические изделия продаются только лицам старше 18 лет. Перед запуском прочитайте инструкцию на упаковке, соблюдайте безопасное расстояние и местные правила использования пиротехники.</div></div>
+</div></section>
+
+<footer class="foot"><div class="wrap">
+  <span class="foot__name">Небосвод</span>
+  <span class="foot__made">Создан в <a href="https://web-atelie.ru/">«Веб-Ателье»</a><img src="assets/web-atelie.png" alt=""></span>
+  <span class="foot__demo">Демо-концепт оптового магазина пиротехники. Название, контакты, цены и товары условные, изображения салютов нарисованы автоматически.</span>
+</div></footer>
+
+<div class="ov" id="ov"></div>
+
+<aside class="drawer" id="drawer" aria-label="Заявка">
+  <div class="dr__h"><h3>Заявка на опт</h3><button class="x" data-close>✕</button></div>
+  <div class="dr__list" id="cartList"></div>
+  <div class="dr__f">
+    <div class="tot"><span>Итого</span><b id="cartSum">0 ₽</b></div>
+    <div class="note" id="cartNote"></div>
+    <form id="cartForm" style="display:grid;gap:10px" novalidate>
+      <input class="fld" name="name" placeholder="Ваше имя">
+      <input class="fld" name="phone" type="tel" placeholder="+7 (___) ___-__-__">
+      <button class="btn btn--gold" type="submit">Отправить заявку</button>
+      <div class="ok-msg" id="okCart">Спасибо! Это демо — заявка никуда не отправлена.</div>
+    </form>
+  </div>
+</aside>
+
+<div class="modal" id="pmodal" role="dialog" aria-modal="true"><div class="pm" id="pm"></div></div>
+
+<div class="modal" id="imodal" role="dialog" aria-modal="true"><div class="imp">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h3 style="font-size:22px">Загрузка своих салютов</h3><button class="x" data-close>✕</button></div>
+  <p style="color:var(--mut)">Вставьте строки из Excel или Google Таблицы через точку с запятой: <b>Название; Категория; Калибр; Залпов; Эффектов; Цена за шт; Штук в коробке</b>. Карточки сразу появятся в каталоге с отметкой «Новинка».</p>
+  <textarea class="fld" id="csv">Ночной экспресс; Батареи салютов; 1,2; 64; 9; 2450; 4
+Вишнёвый сад; Батареи салютов; 0,8; 36; 6; 890; 12
+Звёздная пыль; Фонтаны; 0; 1; 3; 240; 24</textarea>
+  <div style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn btn--gold" id="doImp">Загрузить в каталог</button><button class="btn btn--ghost" id="resetImp">Убрать загруженные</button></div>
+  <div class="ok-msg" id="okImp"></div>
+</div></div>
+
+<script>
+const CATS = [
+  ['bat','Батареи салютов'],['rim','Римские свечи'],['fon','Фонтаны'],['rak','Ракеты'],
+  ['ben','Бенгальские огни'],['pet','Петарды'],['shar','Фестивальные шары'],['ver','Вертушки']
+];
+const catName = id => (CATS.find(c => c[0] === id) || [0, id])[1];
+
+// [название, категория, калибр, залпов, эффектов, время (с), класс, шт в коробке, цена за шт, распродажа, оттенок]
+const RAW = [
+  ['Полярная ночь','bat',1.2,100,12,60,'III',4,3890,0,200],
+  ['Звёздный дождь','bat',0.8,49,7,35,'III',8,1290,1,45],
+  ['Кометы над Волгой','bat',1.0,72,9,48,'III',6,2190,0,20],
+  ['Золотая ива','bat',1.2,36,5,30,'III',8,1590,0,42],
+  ['Изумрудный город','bat',1.0,120,14,75,'III',4,3290,0,140],
+  ['Триумф','bat',1.5,25,5,28,'III',6,2690,0,0],
+  ['Огненный вальс','bat',0.8,100,10,62,'III',6,1990,1,15],
+  ['Сибирский характер','bat',1.2,150,16,90,'III',2,5490,0,190],
+  ['Бархатный сезон','bat',0.8,25,4,18,'II',12,690,0,320],
+  ['Гранд-финал','bat',1.2,280,20,120,'III',1,9890,0,50],
+  ['Хрустальный шар','bat',1.0,49,7,36,'III',8,1490,0,180],
+  ['Северный ветер','bat',0.8,36,6,24,'III',8,990,0,210],
+  ['Карнавал огней','bat',1.0,88,11,55,'III',4,2590,1,300],
+  ['Тайга','bat',1.2,64,8,45,'III',6,2390,0,100],
+  ['Мегаполис','bat',0.8,200,22,110,'III',2,4290,0,260],
+  ['Рубиновая ночь','bat',1.0,19,4,15,'II',12,790,0,355],
+  ['Новогодний квартал','bat',0.6,16,3,12,'II',24,390,0,60],
+  ['Ледяная корона','bat',1.1,36,6,26,'III',8,1390,0,190],
+  ['Луч','rim',0.8,8,2,12,'II',24,190,0,48],
+  ['Светлячок','rim',0.5,10,2,14,'II',36,120,0,80],
+  ['Метеор','rim',1.0,12,3,18,'III',12,340,1,10],
+  ['Огненная стрела','rim',1.2,15,3,22,'III',12,490,0,330],
+  ['Искрящийся каскад','fon',0,1,3,40,'II',24,260,0,45],
+  ['Серебряный ручей','fon',0,1,2,30,'II',36,180,0,220],
+  ['Вулкан','fon',0,1,4,55,'II',12,420,0,25],
+  ['Орбита','rak',0,1,1,4,'III',36,150,0,200],
+  ['Комета-М','rak',0,1,2,4,'III',24,230,0,300],
+  ['Спутник','rak',0,1,1,3,'II',48,90,1,180],
+  ['Бенгальские огни 30 см','ben',0,1,1,60,'I',200,18,0,48],
+  ['Бенгальские огни 50 см','ben',0,1,1,90,'I',120,32,0,45],
+  ['Гром','pet',0,1,1,1,'II',144,14,0,15],
+  ['Корсар','pet',0,1,1,1,'III',96,26,0,0],
+  ['Фестивальный шар 1,75"','shar',1.75,1,1,5,'III',36,290,0,280],
+  ['Фестивальный шар 2,5"','shar',2.5,1,1,6,'III',24,590,0,40],
+  ['Юла','ver',0,1,2,20,'I',72,45,0,160],
+  ['Пчёлка','ver',0,1,1,15,'I',96,28,0,55]
+];
+const BASE = RAW.map((r, i) => ({id:'n'+i, art:'НБ-' + (7100 + i * 17), name:r[0], cat:r[1], cal:r[2], shots:r[3], eff:r[4], time:r[5], cls:r[6], box:r[7], price:r[8], sale:!!r[9], hue:r[10], pop:i}));
+
+function loadJSON(k, d){ try { return JSON.parse(localStorage.getItem(k)) || d; } catch(e){ return d; } }
+function saveJSON(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+let IMP = loadJSON('nbs-imp', []);
+let cart = loadJSON('nbs-cart', {});
+const ALL = () => IMP.concat(BASE);
+const find = id => ALL().find(p => p.id === id);
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString('ru-RU') + ' ₽';
+const calTxt = c => c ? String(c).replace('.', ',') + '"' : '—';
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function plural(n, a, b, c){ const m = n % 10, h = n % 100; return m === 1 && h !== 11 ? a : m >= 2 && m <= 4 && (h < 10 || h >= 20) ? b : c; }
+
+// Картинка салюта: «взрыв», одинаковый для одного товара при каждом показе
+function rnd(seed){ let s = 7; for (const ch of seed) s = (s * 31 + ch.charCodeAt(0)) >>> 0; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; }
+function burst(p, small){
+  const R = rnd(p.id + p.name), n = small ? 2 : 3;
+  let out = '<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">';
+  for (let i = 0; i < 40; i++) out += `<circle cx="${(R()*400)|0}" cy="${(R()*200)|0}" r="${(R()*1.3+.3).toFixed(1)}" fill="#fff" opacity="${(R()*.6+.2).toFixed(2)}"/>`;
+  for (let b = 0; b < n; b++){
+    const cx = 80 + R()*240, cy = 70 + R()*110, rr = 50 + R()*60, hh = (p.hue + b*40 + R()*30) % 360, rays = 18 + ((R()*14)|0);
+    out += `<line x1="${cx.toFixed(1)}" y1="300" x2="${cx.toFixed(1)}" y2="${(cy+rr*.3).toFixed(1)}" stroke="hsl(${hh},80%,70%)" stroke-width="1.2" stroke-dasharray="3 6" opacity=".35"/>`;
+    out += `<g opacity="${b ? .75 : 1}">`;
+    for (let k = 0; k < rays; k++){
+      const a = k / rays * Math.PI * 2 + R()*.1, l = rr * (.7 + R()*.35);
+      const x2 = cx + Math.cos(a)*l, y2 = cy + Math.sin(a)*l + l*.12;
+      out += `<line x1="${(cx+Math.cos(a)*l*.25).toFixed(1)}" y1="${(cy+Math.sin(a)*l*.25).toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="hsl(${hh},95%,65%)" stroke-width="2" stroke-linecap="round" opacity=".85"/><circle cx="${x2.toFixed(1)}" cy="${y2.toFixed(1)}" r="2.6" fill="hsl(${(hh+20)%360},100%,78%)"/>`;
+    }
+    out += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${(rr*.18).toFixed(1)}" fill="hsl(${hh},100%,85%)" opacity=".35"/></g>`;
+  }
+  return out + '</svg>';
+}
+
+function renderCats(){
+  $('cats-grid').innerHTML = CATS.map(([id, nm], i) => {
+    const n = ALL().filter(p => p.cat === id).length;
+    return `<button class="cat" data-cat="${id}">${burst({id, name:nm, hue:(i * 47 + 20) % 360}, true)}<h3>${nm}</h3><span>${n} ${plural(n,'товар','товара','товаров')} →</span></button>`;
+  }).join('');
+  $('statN').textContent = ALL().length;
+}
+
+const st = {cat:'', q:'', cal:'', shots:'', sort:'pop', sale:false, shown:12};
+function renderChips(){
+  $('chips').innerHTML = [['', 'Все']].concat(CATS).map(([id, nm]) => `<button class="chip${st.cat === id ? ' on' : ''}" data-chip="${id}">${nm}</button>`).join('');
+}
+function filtered(){
+  const q = st.q.trim().toLowerCase();
+  const a = ALL().filter(p =>
+    (!st.cat || p.cat === st.cat) &&
+    (!q || p.name.toLowerCase().includes(q) || p.art.toLowerCase().includes(q)) &&
+    (!st.sale || p.sale) &&
+    (!st.cal || (st.cal === 's' ? p.cal > 0 && p.cal <= .8 : st.cal === 'm' ? p.cal >= 1 && p.cal < 1.2 : p.cal >= 1.2)) &&
+    (!st.shots || (st.shots === 's' ? p.shots <= 25 : st.shots === 'm' ? p.shots > 25 && p.shots <= 100 : p.shots > 100))
+  );
+  const s = {pa:(x,y)=>x.price-y.price, pd:(x,y)=>y.price-x.price, sh:(x,y)=>y.shots-x.shots, pop:(x,y)=>(y.isNew?1:0)-(x.isNew?1:0)||x.pop-y.pop}[st.sort];
+  return a.sort(s);
+}
+function card(p){
+  const inC = cart[p.id];
+  return `<article class="card">
+    <div class="card__img" data-open="${p.id}">${burst(p)}${p.isNew ? '<span class="badge badge--new">НОВИНКА</span>' : p.sale ? '<span class="badge">РАСПРОДАЖА</span>' : ''}<span class="art">${p.art}</span></div>
+    <div class="card__b">
+      <h3 data-open="${p.id}">${esc(p.name)}</h3>
+      <div class="specs"><div><small>Калибр</small><b>${calTxt(p.cal)}</b></div><div><small>Залпов</small><b>${p.shots}</b></div><div><small>Эффектов</small><b>${p.eff}</b></div></div>
+      <div class="card__f"><div class="price"><b>${fmt(p.price)}</b><small>за шт · коробка ${p.box} шт</small></div>
+      <button class="add${inC ? ' in' : ''}" data-add="${p.id}" aria-label="В заявку">${inC ? '✓' : '+'}</button></div>
+    </div></article>`;
+}
+function renderGrid(){
+  const a = filtered();
+  $('count').textContent = `Найдено: ${a.length} ${plural(a.length,'позиция','позиции','позиций')}`;
+  $('grid').innerHTML = a.length ? a.slice(0, st.shown).map(card).join('') : '<div class="empty">Ничего не нашлось. Попробуйте убрать часть фильтров.</div>';
+  $('more').style.display = a.length > st.shown ? '' : 'none';
+}
+function rerender(){ st.shown = 12; renderChips(); renderGrid(); }
+
+function renderCart(){
+  const ids = Object.keys(cart).filter(find);
+  let sum = 0, boxes = 0;
+  $('cartList').innerHTML = ids.length ? ids.map(id => {
+    const p = find(id), q = cart[id], s = p.price * p.box * q; sum += s; boxes += q;
+    return `<div class="ln">${burst(p, true)}<div><h4>${esc(p.name)}</h4><small>${q} кор. × ${p.box} шт · ${fmt(s)}</small></div>
+      <div class="qty"><button data-q="${id}" data-d="-1" aria-label="Меньше">−</button><b>${q}</b><button data-q="${id}" data-d="1" aria-label="Больше">+</button></div></div>`;
+  }).join('') : '<p class="note" style="padding:30px 0">Заявка пуста. Добавьте салюты из каталога кнопкой «+».</p>';
+  $('cartSum').textContent = fmt(sum);
+  $('cartN').textContent = boxes;
+  $('cartNote').textContent = sum && sum < 30000 ? `Минимальный оптовый заказ — 30 000 ₽. Добавьте ещё на ${fmt(30000 - sum)}.` : sum ? 'Сумма предварительная: менеджер подтвердит наличие и пришлёт счёт.' : '';
+}
+function add(id){ cart[id] = (cart[id] || 0) + 1; saveJSON('nbs-cart', cart); renderCart(); renderGrid(); }
+
+function openM(el){ $('ov').classList.add('on'); el.classList.add('on'); }
+function closeAll(){ ['ov','pmodal','imodal','drawer'].forEach(id => $(id).classList.remove('on')); }
+function openProduct(id){
+  const p = find(id); if (!p) return;
+  $('pm').innerHTML = `<div class="pm__img">${burst(p)}<button class="x" data-close aria-label="Закрыть">✕</button></div>
+    <div class="pm__b"><span class="kicker">${catName(p.cat)} · ${p.art}</span><h3>${esc(p.name)}</h3>
+    <div class="tbl"><span>Калибр</span><b>${calTxt(p.cal)}</b><span>Залпов</span><b>${p.shots}</b><span>Эффектов</span><b>${p.eff}</b>
+    <span>Время работы</span><b>${p.time ? p.time + ' с' : '—'}</b><span>Класс опасности</span><b>${p.cls}</b><span>В коробке</span><b>${p.box} шт</b></div>
+    <div class="price"><b>${fmt(p.price)}</b><small>за шт · ${fmt(p.price * p.box)} за коробку</small></div>
+    <p class="note">В каждую карточку можно добавить видео запуска, сертификат и инструкцию.</p>
+    <button class="btn btn--gold" data-add="${p.id}" data-modal>В заявку — 1 коробка</button></div>`;
+  openM($('pmodal'));
+}
+
+function doImport(){
+  const lines = $('csv').value.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+  const num = s => parseFloat(String(s || '0').replace(',', '.').replace(/[^\d.]/g, '')) || 0;
+  const added = [];
+  lines.forEach((ln, i) => {
+    const c = ln.split(/;|\t/).map(s => s.trim());
+    if (!c[0]) return;
+    const cat = (CATS.find(x => x[1].toLowerCase() === (c[1] || '').toLowerCase()) || ['bat'])[0];
+    added.push({id:'u' + Date.now().toString(36) + i, art:'НБ-Н' + (100 + IMP.length + added.length), name:c[0], cat, cal:num(c[2]), shots:Math.max(1, num(c[3])|0), eff:Math.max(1, num(c[4])|0), time:0, cls:'—', box:Math.max(1, num(c[6])|0), price:Math.max(1, num(c[5])|0), sale:false, hue:(i * 73 + 200) % 360, pop:-1, isNew:true});
+  });
+  if (!added.length){ showImp('Не нашёл ни одной строки. Проверьте, что поля разделены точкой с запятой.'); return; }
+  IMP = added.concat(IMP); saveJSON('nbs-imp', IMP);
+  st.cat = ''; st.sort = 'pop'; $('fSort').value = 'pop';
+  renderCats(); rerender();
+  showImp(`Готово: добавлено ${added.length} ${plural(added.length,'карточка','карточки','карточек')}. Они в начале каталога.`);
+}
+function showImp(t){ const e = $('okImp'); e.textContent = t; e.style.display = 'block'; }
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-cat],[data-chip],[data-add],[data-open],[data-q],[data-close],[data-gocart]');
+  if (!t) return;
+  if (t.dataset.gocart !== undefined){ closeAll(); openM($('drawer')); }
+  else if (t.dataset.cat !== undefined){ st.cat = t.dataset.cat; rerender(); $('catalog').scrollIntoView({behavior:'smooth'}); }
+  else if (t.dataset.chip !== undefined){ st.cat = t.dataset.chip; rerender(); }
+  else if (t.dataset.add){ add(t.dataset.add); if (t.dataset.modal !== undefined){ t.textContent = '✓ Добавлено — открыть заявку'; t.removeAttribute('data-add'); t.setAttribute('data-gocart', ''); } }
+  else if (t.dataset.open){ openProduct(t.dataset.open); }
+  else if (t.dataset.q){ const id = t.dataset.q; cart[id] = (cart[id] || 0) + (+t.dataset.d); if (cart[id] <= 0) delete cart[id]; saveJSON('nbs-cart', cart); renderCart(); renderGrid(); }
+  else if (t.dataset.close !== undefined){ closeAll(); }
+});
+$('ov').onclick = closeAll;
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
+$('openCart').onclick = () => openM($('drawer'));
+$('openImp').onclick = () => { $('okImp').style.display = 'none'; openM($('imodal')); };
+$('doImp').onclick = doImport;
+$('resetImp').onclick = () => { IMP = []; saveJSON('nbs-imp', IMP); Object.keys(cart).forEach(id => { if (!find(id)) delete cart[id]; }); saveJSON('nbs-cart', cart); renderCats(); rerender(); renderCart(); showImp('Загруженные карточки убраны.'); };
+$('more').onclick = () => { st.shown += 12; renderGrid(); };
+$('q').oninput = e => { st.q = e.target.value; st.shown = 12; renderGrid(); };
+$('fCal').onchange = e => { st.cal = e.target.value; st.shown = 12; renderGrid(); };
+$('fShots').onchange = e => { st.shots = e.target.value; st.shown = 12; renderGrid(); };
+$('fSort').onchange = e => { st.sort = e.target.value; renderGrid(); };
+$('fSale').onchange = e => { st.sale = e.target.checked; st.shown = 12; renderGrid(); };
+
+document.querySelectorAll('input[type=tel]').forEach(inp => inp.addEventListener('input', () => {
+  let d = inp.value.replace(/\D/g, ''); if (d[0] === '8') d = '7' + d.slice(1); if (d && d[0] !== '7') d = '7' + d; d = d.slice(0, 11);
+  inp.value = d.length > 1 ? '+7 (' + d.slice(1, 4) + (d.length > 4 ? ') ' + d.slice(4, 7) : '') + (d.length > 7 ? '-' + d.slice(7, 9) : '') + (d.length > 9 ? '-' + d.slice(9, 11) : '') : d ? '+7' : '';
+}));
+function demoForm(form, okId){
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const ph = form.querySelector('[type=tel]'), nm = form.querySelector('[name=name]');
+    let bad = false;
+    [nm, ph].forEach(f => { const v = f === ph ? f.value.replace(/\D/g, '').length === 11 : f.value.trim().length > 1; f.style.borderColor = v ? '' : 'var(--pink)'; if (!v) bad = true; });
+    if (bad) return;
+    $(okId).style.display = 'block'; form.querySelector('button[type=submit]').disabled = true;
+  });
+}
+demoForm($('leadForm'), 'okLead'); demoForm($('cartForm'), 'okCart');
+
+// Салют на первом экране
+function sky(){
+  const cv = $('sky'), cx = cv.getContext('2d'), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W = 0, H = 0, parts = [], rockets = [], stars = [];
+  function size(){ const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2); W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0); cx.fillStyle = '#070a1a'; cx.fillRect(0, 0, W, H);
+    stars = Array.from({length: Math.round(W * H / 6000)}, () => ({x: Math.random() * W, y: Math.random() * H * .8, r: Math.random() * 1.2 + .3, t: Math.random() * 6})); }
+  size(); addEventListener('resize', size);
+  function boom(x, y){ const hue = Math.random() * 360, n = 70 + (Math.random() * 50 | 0), sp = 2 + Math.random() * 2.5;
+    for (let i = 0; i < n; i++){ const a = i / n * Math.PI * 2, v = sp * (.6 + Math.random() * .5); parts.push({x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1, hue: hue + Math.random() * 30, d: .008 + Math.random() * .008}); } }
+  function launch(){ const x = W * (W < 700 ? .2 + Math.random() * .7 : .45 + Math.random() * .5); rockets.push({x, y: H, vy: -(H * .011 + Math.random() * 3), ty: H * (.1 + Math.random() * .3)}); }
+  function frame(t){
+    cx.fillStyle = 'rgba(7,10,26,.22)'; cx.fillRect(0, 0, W, H);
+    stars.forEach(s => { cx.globalAlpha = .4 + .4 * Math.sin(t / 900 + s.t); cx.fillStyle = '#fff'; cx.fillRect(s.x, s.y, s.r, s.r); }); cx.globalAlpha = 1;
+    rockets = rockets.filter(r => { r.y += r.vy; r.vy *= .985; cx.fillStyle = '#ffd88a'; cx.fillRect(r.x, r.y, 2, 6); if (r.y <= r.ty || r.vy > -1.2){ boom(r.x, r.y); return false; } return true; });
+    parts = parts.filter(p => { p.x += p.vx; p.y += p.vy; p.vx *= .985; p.vy = p.vy * .985 + .035; p.life -= p.d;
+      cx.fillStyle = `hsla(${p.hue},100%,${55 + p.life * 25}%,${p.life})`; cx.beginPath(); cx.arc(p.x, p.y, 1.8, 0, 7); cx.fill(); return p.life > 0; });
+    if (Math.random() < .025 && rockets.length < 3) launch();
+    requestAnimationFrame(frame);
+  }
+  if (reduce){ stars.forEach(s => { cx.fillStyle = '#fff'; cx.fillRect(s.x, s.y, s.r, s.r); }); boom(W * .7, H * .3); boom(W * .85, H * .2);
+    parts.forEach(p => { for (let k = 0; k < 30; k++){ p.x += p.vx; p.y += p.vy; p.vy += .03; } cx.fillStyle = `hsl(${p.hue},100%,65%)`; cx.beginPath(); cx.arc(p.x, p.y, 1.8, 0, 7); cx.fill(); }); return; }
+  launch(); setTimeout(launch, 500); requestAnimationFrame(frame);
+}
+
+renderCats(); rerender(); renderCart(); sky();
+</script>
+</body>
+</html>
